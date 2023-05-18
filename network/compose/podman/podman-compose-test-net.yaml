@@ -1,0 +1,27 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '3.7'
+
+services:
+  peer0.mngorg.example.com:
+    volumes:
+      - ./podman/peercfg:/etc/hyperledger/peercfg
+  
+  peer1.mngorg.example.com:
+    volumes:
+      - ./podman/peercfg:/etc/hyperledger/peercfg
+
+  peer2.mngorg.example.com:
+    volumes:
+      - ./podman/peercfg:/etc/hyperledger/peercfg
+  
+  peer3.mngorg.example.com:
+    volumes:
+      - ./podman/peercfg:/etc/hyperledger/peercfg
+      
+  cli:
+    volumes:
+      - ./podman/peercfg:/etc/hyperledger/peercfg

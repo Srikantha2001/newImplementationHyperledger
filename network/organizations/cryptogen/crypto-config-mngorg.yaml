@@ -1,0 +1,12 @@
+
+PeerOrgs:
+  - Name: mngorg
+    Domain: mngorg.example.com
+    EnableNodeOUs: true
+    
+    Template:
+      Count: 4
+      SANS:
+        - localhost
+    Users:
+      Count: 1
