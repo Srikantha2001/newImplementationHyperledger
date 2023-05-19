@@ -40,7 +40,75 @@ setGlobals() {
   fi
 }
 
+setGlobals1() {
+  local USING_ORG=""
+  if [ -z "$OVERRIDE_ORG" ]; then
+    USING_ORG=$1
+  else
+    USING_ORG="${OVERRIDE_ORG}"
+  fi
+  infoln "Using organization ${USING_ORG}"
+  if [ $USING_ORG = "mngorg" ]; then
+    export CORE_PEER_LOCALMSPID="MngOrgMSP"
+    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MNGORG_CA
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mngorg.example.com/users/Admin@mngorg.example.com/msp
+    export CORE_PEER_ADDRESS=localhost:9051
+  else
+    errorln "ORG Unknown"
+  fi
+
+  if [ "$VERBOSE" == "true" ]; then
+    env | grep CORE
+  fi
+}
+
+
+setGlobals2() {
+  local USING_ORG=""
+  if [ -z "$OVERRIDE_ORG" ]; then
+    USING_ORG=$1
+  else
+    USING_ORG="${OVERRIDE_ORG}"
+  fi
+  infoln "Using organization ${USING_ORG}"
+  if [ $USING_ORG = "mngorg" ]; then
+    export CORE_PEER_LOCALMSPID="MngOrgMSP"
+    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MNGORG_CA
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mngorg.example.com/users/Admin@mngorg.example.com/msp
+    export CORE_PEER_ADDRESS=localhost:11051
+  else
+    errorln "ORG Unknown"
+  fi
+
+  if [ "$VERBOSE" == "true" ]; then
+    env | grep CORE
+  fi
+}
+
+
+setGlobals3() {
+  local USING_ORG=""
+  if [ -z "$OVERRIDE_ORG" ]; then
+    USING_ORG=$1
+  else
+    USING_ORG="${OVERRIDE_ORG}"
+  fi
+  infoln "Using organization ${USING_ORG}"
+  if [ $USING_ORG = "mngorg" ]; then
+    export CORE_PEER_LOCALMSPID="MngOrgMSP"
+    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MNGORG_CA
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/mngorg.example.com/users/Admin@mngorg.example.com/msp
+    export CORE_PEER_ADDRESS=localhost:13051
+  else
+    errorln "ORG Unknown"
+  fi
+
+  if [ "$VERBOSE" == "true" ]; then
+    env | grep CORE
+  fi
+}
 # Set environment variables for use in the CLI container
+
 setGlobalsCLI() {
   setGlobals $1
 
@@ -57,6 +125,55 @@ setGlobalsCLI() {
   fi
 }
 
+setGlobalsCLI1() {
+  setGlobals1 $1
+
+  local USING_ORG=""
+  if [ -z "$OVERRIDE_ORG" ]; then
+    USING_ORG=$1
+  else
+    USING_ORG="${OVERRIDE_ORG}"
+  fi
+  if [ $USING_ORG = "mngorg" ]; then
+    export CORE_PEER_ADDRESS=peer1.mngorg.example.com:9051
+  else
+    errorln "ORG Unknown"
+  fi
+}
+
+
+setGlobalsCLI2() {
+  setGlobals2 $1
+
+  local USING_ORG=""
+  if [ -z "$OVERRIDE_ORG" ]; then
+    USING_ORG=$1
+  else
+    USING_ORG="${OVERRIDE_ORG}"
+  fi
+  if [ $USING_ORG = "mngorg" ]; then
+    export CORE_PEER_ADDRESS=peer2.mngorg.example.com:11051
+  else
+    errorln "ORG Unknown"
+  fi
+}
+
+
+setGlobalsCLI3() {
+  setGlobals3 $1
+
+  local USING_ORG=""
+  if [ -z "$OVERRIDE_ORG" ]; then
+    USING_ORG=$1
+  else
+    USING_ORG="${OVERRIDE_ORG}"
+  fi
+  if [ $USING_ORG = "mngorg" ]; then
+    export CORE_PEER_ADDRESS=peer3.mngorg.example.com:13051
+  else
+    errorln "ORG Unknown"
+  fi
+}
 # parsePeerConnectionParameters $@
 # Helper function that sets the peer connection parameters for a chaincode
 # operation
@@ -68,6 +185,101 @@ parsePeerConnectionParameters() {
   while [ "$#" -gt 0 ]; do
     setGlobals $1
     PEER="peer0.$1"
+    ## Set peer addresses
+    if [ -z "$PEERS" ]
+    then
+	PEERS="$PEER"
+    else
+	PEERS="$PEERS $PEER"
+    fi
+    PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" --peerAddresses $CORE_PEER_ADDRESS)
+    ## Set path to TLS certificate
+    CA=PEER0_${1^^}_CA
+    
+    # DEBUGGING
+    infoln "DEBUG KE-2"
+    infoln "$1"
+    infoln "${CA}"
+
+    TLSINFO=(--tlsRootCertFiles "${!CA}")
+    PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
+    # shift by one to get to the next organization
+    shift
+  done
+}
+
+parsePeerConnectionParameters1() {
+  PEER_CONN_PARMS=()
+  PEERS=""
+  infoln "DEBUGGGG"
+  infoln "$#"
+  while [ "$#" -gt 0 ]; do
+    setGlobals1 $1
+    PEER="peer1.$1"
+    ## Set peer addresses
+    if [ -z "$PEERS" ]
+    then
+	PEERS="$PEER"
+    else
+	PEERS="$PEERS $PEER"
+    fi
+    PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" --peerAddresses $CORE_PEER_ADDRESS)
+    ## Set path to TLS certificate
+    CA=PEER0_${1^^}_CA
+    
+    # DEBUGGING
+    infoln "DEBUG KE-2"
+    infoln "$1"
+    infoln "${CA}"
+
+    TLSINFO=(--tlsRootCertFiles "${!CA}")
+    PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
+    # shift by one to get to the next organization
+    shift
+  done
+}
+
+
+parsePeerConnectionParameters2() {
+  PEER_CONN_PARMS=()
+  PEERS=""
+  infoln "DEBUGGGG"
+  infoln "$#"
+  while [ "$#" -gt 0 ]; do
+    setGlobals2 $1
+    PEER="peer2.$1"
+    ## Set peer addresses
+    if [ -z "$PEERS" ]
+    then
+	PEERS="$PEER"
+    else
+	PEERS="$PEERS $PEER"
+    fi
+    PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" --peerAddresses $CORE_PEER_ADDRESS)
+    ## Set path to TLS certificate
+    CA=PEER0_${1^^}_CA
+    
+    # DEBUGGING
+    infoln "DEBUG KE-2"
+    infoln "$1"
+    infoln "${CA}"
+
+    TLSINFO=(--tlsRootCertFiles "${!CA}")
+    PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
+    # shift by one to get to the next organization
+    shift
+  done
+}
+
+
+parsePeerConnectionParameters3() {
+  PEER_CONN_PARMS=()
+  PEERS=""
+  infoln "DEBUGGGG"
+  infoln "$#"
+  while [ "$#" -gt 0 ]; do
+    setGlobals3 $1
+    PEER="peer3.$1"
     ## Set peer addresses
     if [ -z "$PEERS" ]
     then

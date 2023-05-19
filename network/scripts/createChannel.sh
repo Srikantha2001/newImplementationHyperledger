@@ -55,7 +55,14 @@ createChannel() {
 joinChannel() {
   FABRIC_CFG_PATH=$PWD/../config/
   ORG=$1
-  setGlobals $ORG
+  PEERNAME=$2
+  infoln "Joining PEER${PEERNAME} to Channel ${CHANNEL_NAME}"
+#   setGlobals $ORG
+  if [ $PEERNAME == 0 ]; then
+  	setGlobals $ORG
+  else
+	setGlobals${PEERNAME} $ORG
+  fi
 	local rc=1
 	local COUNTER=1
 	## Sometimes Join takes time, hence retry
@@ -69,7 +76,7 @@ joinChannel() {
 		COUNTER=$(expr $COUNTER + 1)
 	done
 	cat log.txt
-	verifyResult $res "After $MAX_RETRY attempts, peer0.${ORG} has failed to join channel '$CHANNEL_NAME' "
+	verifyResult $res "After $MAX_RETRY attempts, peer${PEERNAME}.${ORG} has failed to join channel '$CHANNEL_NAME' "
 }
 
 setAnchorPeer() {
@@ -93,10 +100,17 @@ successln "Channel '$CHANNEL_NAME' created"
 
 ## Join all the peers to the channel
 infoln "Joining mngorg peer to the channel..."
-joinChannel "mngorg"
+
+####
+# ADDITION 1
+####
+joinChannel "mngorg" 0
+joinChannel "mngorg" 1
+joinChannel "mngorg" 2
+joinChannel "mngorg" 3
 
 ## Set the anchor peers for each org in the channel
 infoln "Setting anchor peer for mngorg..."
-setAnchorPeer "mngorg"
+setAnchorPeer "mngorg" 
 
 successln "Channel '$CHANNEL_NAME' joined"
