@@ -142,35 +142,58 @@ packageChaincode
 
 ## Install chaincode on peer0.mngorg and peer0.mngorg2
 infoln "Installing chaincode on peer0.mngorg..."
-installChaincode "mngorg"
+installChaincode "mngorg" 0
+
+infoln "Installing chaincode on peer0.mngorg..."
+installChaincode "mngorg" 1
+
+infoln "Installing chaincode on peer0.mngorg..."
+installChaincode "mngorg" 2
+
+infoln "Installing chaincode on peer0.mngorg..."
+installChaincode "mngorg" 3
 
 ## query whether the chaincode is installed
-queryInstalled "mngorg"
+queryInstalled "mngorg" 0
+queryInstalled "mngorg" 1
+queryInstalled "mngorg" 2
+queryInstalled "mngorg" 3
 
 ## approve the definition for mngorg
-approveForMyOrg "mngorg"
+approveForMyOrg "mngorg" 0
+# approveForMyOrg "mngorg" 1
+# approveForMyOrg "mngorg" 2
+# approveForMyOrg "mngorg" 3
 
 ## check whether the chaincode definition is ready to be committed
 ## expect mngorg to have approved and mngorg2 not to
-checkCommitReadiness "mngorg" "\"MngOrgMSP\": true" 
+checkCommitReadiness "mngorg" 0 "\"MngOrgMSP\": true" 
+checkCommitReadiness "mngorg" 1 "\"MngOrgMSP\": true" 
+checkCommitReadiness "mngorg" 2 "\"MngOrgMSP\": true" 
+checkCommitReadiness "mngorg" 3 "\"MngOrgMSP\": true" 
 
-
-## check whether the chaincode definition is ready to be committed
-## expect them both to have approved
-checkCommitReadiness "mngorg" "\"MngOrgMSP\": true" 
 
 ## now that we know for sure both orgs have approved, commit the definition
-commitChaincodeDefinition "mngorg" 
+commitChaincodeDefinition 0 "mngorg" 
+# commitChaincodeDefinition 1 "mngorg" 
+# commitChaincodeDefinition 2 "mngorg" 
+# commitChaincodeDefinition 3 "mngorg" 
 
 ## query on both orgs to see that the definition committed successfully
-queryCommitted "mngorg"
+queryCommitted "mngorg" 0
+queryCommitted "mngorg" 1
+queryCommitted "mngorg" 2
+queryCommitted "mngorg" 3
 
 ## Invoke the chaincode - this does require that the chaincode have the 'initLedger'
 ## method defined
 if [ "$CC_INIT_FCN" = "NA" ]; then
   infoln "Chaincode initialization is not required"
 else
-  chaincodeInvokeInit "mngorg" 
+  chaincodeInvokeInit "mngorg" 0
+  chaincodeInvokeInit "mngorg" 1
+  chaincodeInvokeInit "mngorg" 2
+  chaincodeInvokeInit "mngorg" 3
 fi
 
 exit 0

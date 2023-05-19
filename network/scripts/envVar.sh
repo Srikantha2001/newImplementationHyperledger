@@ -18,7 +18,7 @@ export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/exa
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
 
 # Set environment variables for the peer org
-setGlobals() {
+setGlobals0() {
   local USING_ORG=""
   if [ -z "$OVERRIDE_ORG" ]; then
     USING_ORG=$1
@@ -109,8 +109,8 @@ setGlobals3() {
 }
 # Set environment variables for use in the CLI container
 
-setGlobalsCLI() {
-  setGlobals $1
+setGlobalsCLI0() {
+  setGlobals0 $1
 
   local USING_ORG=""
   if [ -z "$OVERRIDE_ORG" ]; then
@@ -177,13 +177,13 @@ setGlobalsCLI3() {
 # parsePeerConnectionParameters $@
 # Helper function that sets the peer connection parameters for a chaincode
 # operation
-parsePeerConnectionParameters() {
+parsePeerConnectionParameters0() {
   PEER_CONN_PARMS=()
   PEERS=""
   infoln "DEBUGGGG"
   infoln "$#"
   while [ "$#" -gt 0 ]; do
-    setGlobals $1
+    setGlobals0 $1
     PEER="peer0.$1"
     ## Set peer addresses
     if [ -z "$PEERS" ]

@@ -34,7 +34,7 @@ createChannelGenesisBlock() {
 }
 
 createChannel() {
-	setGlobals "mngorg"
+	setGlobals0 "mngorg"
 	# Poll in case the raft leader is not set yet
 	local rc=1
 	local COUNTER=1
@@ -58,11 +58,7 @@ joinChannel() {
   PEERNAME=$2
   infoln "Joining PEER${PEERNAME} to Channel ${CHANNEL_NAME}"
 #   setGlobals $ORG
-  if [ $PEERNAME == 0 ]; then
-  	setGlobals $ORG
-  else
 	setGlobals${PEERNAME} $ORG
-  fi
 	local rc=1
 	local COUNTER=1
 	## Sometimes Join takes time, hence retry
