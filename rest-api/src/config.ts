@@ -24,7 +24,7 @@ export const JOB_QUEUE_NAME = 'submit';
  */
 export const logLevel = env
   .get('LOG_LEVEL')
-  .default('info')
+  .default('debug')
   .asEnum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']);
 
 /**
