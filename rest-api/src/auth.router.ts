@@ -39,8 +39,7 @@ authRouter.post(
         x_api_key: env.get('MNGORG_APIKEY').asString(),
         role: 'mngorg_admin',
       });
-    }  
-    else {
+    } else {
       return res.status(UNAUTHORIZED).json({
         status: getReasonPhrase(UNAUTHORIZED),
       });

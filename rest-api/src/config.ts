@@ -120,7 +120,6 @@ export const mspIdMngOrg = env
   .example(`${MNGORG}MSP`)
   .asString();
 
-
 /**
  * Name of the channel which the basic asset sample chaincode has been installed on
  */
@@ -195,8 +194,6 @@ export const privateKeyMngOrg = env
   .example('"-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"')
   .asString();
 
-
-
 /**
  * The host the Redis server is running on
  */
@@ -237,4 +234,3 @@ export const mngorgApiKey = env
   .required()
   .example('123')
   .asString();
-

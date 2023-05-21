@@ -17,7 +17,6 @@ import { body, validationResult } from 'express-validator';
 import { Contract } from 'fabric-network';
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import { Queue } from 'bullmq';
-import { AssetNotFoundError } from './errors';
 import { evatuateTransaction } from './fabric';
 import { addSubmitTransactionJob } from './jobs';
 import { logger } from './logger';

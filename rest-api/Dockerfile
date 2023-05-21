@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY --chown=node:node . /app
 
-RUN  npm ci
+RUN  npm i
 RUN npm run build
 RUN npm prune --production
 
