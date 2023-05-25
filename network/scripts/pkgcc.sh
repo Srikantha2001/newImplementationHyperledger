@@ -61,7 +61,7 @@ cat > "${file}" <<CONN_EOF
 {
   "address": "${address}",
   "dial_timeout": "10s",
-  "tls_required": false
+  "tls_required": true
 }
 CONN_EOF
 

@@ -746,7 +746,7 @@ operations:
         # most operations service endpoints require client authentication when TLS
         # is enabled. clientAuthRequired requires client certificate authentication
         # at the TLS layer to access all resources.
-        clientAuthRequired: false
+        clientAuthRequired: true
 
         # paths to PEM encoded ca certificates to trust for client authentication
         clientRootCAs:

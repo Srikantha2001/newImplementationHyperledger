@@ -24,4 +24,4 @@ services:
 
 networks:
   fabric_test:
-    external: true 
+    external: true

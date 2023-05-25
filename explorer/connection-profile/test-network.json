@@ -1,0 +1,69 @@
+{
+	"name": "test-network",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "MngOrg",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"mng-channel": {
+			"peers": {
+				"peer0.mngorg.example.com": {},
+				"peer1.mngorg.example.com": {},
+				"peer2.mngorg.example.com": {},
+				"peer3.mngorg.example.com": {}
+			}
+		}
+	},
+	"organizations": {
+		"MngOrg": {
+			"mspid": "MngOrgMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/mngorg.example.com/users/Admin@mngorg.example.com/msp/keystore/040d46900da4bff8936e69f0e21d2f58969637dc8b71d9decdd78949e9747626_sk"
+			},
+			"peers": ["peer0.mngorg.example.com","peer1.mngorg.example.com","peer2.mngorg.example.com","peer3.mngorg.example.com"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/mngorg.example.com/users/Admin@mngorg.example.com/msp/signcerts/cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.mngorg.example.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/mngorg.example.com/peers/peer0.mngorg.example.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.mngorg.example.com:7051"
+		},
+		"peer1.mngorg.example.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/mngorg.example.com/peers/peer1.mngorg.example.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer1.mngorg.example.com:9051"
+		},
+		"peer2.mngorg.example.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/mngorg.example.com/peers/peer2.mngorg.example.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer2.mngorg.example.com:11051"
+		},
+		"peer3.mngorg.example.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/mngorg.example.com/peers/peer3.mngorg.example.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer3.mngorg.example.com:13051"
+		}
+	}
+}
