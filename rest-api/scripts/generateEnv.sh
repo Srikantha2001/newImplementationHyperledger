@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-${AS_LOCAL_HOST:=true}
+${AS_LOCAL_HOST:=false}
 
 : "${TEST_NETWORK_HOME:=..}"
 : "${CONNECTION_PROFILE_FILE_MNGORG:=${TEST_NETWORK_HOME}/network/organizations/peerOrganizations/mngorg.example.com/connection-mngorg.json}"
@@ -34,7 +34,7 @@ ENV_END
 if [ "${AS_LOCAL_HOST}" = "true" ]; then
 
 cat << LOCAL_HOST_END >> .env
-AS_LOCAL_HOST=true
+AS_LOCAL_HOST=false
 
 HLF_CONNECTION_PROFILE_MNGORG=$(cat ${CONNECTION_PROFILE_FILE_MNGORG} | jq -c .)
 
